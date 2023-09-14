@@ -2,7 +2,7 @@ import { Entity } from "@/core/entities/entity";
 import { UniqueEntityID } from "@/core/entities/unique-entity-id";
 import { Optional } from "@/core/types/optional";
 
-export interface AnswerProps {
+export interface QuestionCommentProps {
   authorId: UniqueEntityID;
   questionId: UniqueEntityID;
   content: string;
@@ -10,7 +10,7 @@ export interface AnswerProps {
   updatedAt?: Date;
 }
 
-export class Answer extends Entity<AnswerProps> {
+export class QuestionComment extends Entity<QuestionCommentProps> {
   get content() {
     return this.props.content;
   }
@@ -31,10 +31,6 @@ export class Answer extends Entity<AnswerProps> {
     return this.props.updatedAt;
   }
 
-  get excerpt() {
-    return this.content.substring(0, 120).trimEnd().concat("...");
-  }
-
   private touch() {
     this.props.updatedAt = new Date();
   }
@@ -45,10 +41,10 @@ export class Answer extends Entity<AnswerProps> {
   }
 
   static create(
-    props: Optional<AnswerProps, "createdAt">,
+    props: Optional<QuestionCommentProps, "createdAt">,
     id?: UniqueEntityID
   ) {
-    const answer = new Answer(
+    const questionComment = new QuestionComment(
       {
         ...props,
         createdAt: props.createdAt ?? new Date(),
@@ -56,6 +52,6 @@ export class Answer extends Entity<AnswerProps> {
       id
     );
 
-    return answer;
+    return questionComment;
   }
 }
